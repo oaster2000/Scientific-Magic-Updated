@@ -280,6 +280,7 @@ public class TileEntityDeconstructor extends TileEntityLockable implements ITick
 		}
 	}
 
+
 	public int getCookTime(@Nullable ItemStack stack) {
 		return 200;
 	}

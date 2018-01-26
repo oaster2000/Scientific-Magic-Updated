@@ -16,7 +16,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
@@ -41,11 +40,12 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 	private static final int[] SLOTS_TOP = new int[] { 0 };
 	private static final int[] SLOTS_BOTTOM = new int[] { 2, 1 };
 	private static final int[] SLOTS_SIDES = new int[] { 1 };
-	
+
 	int tick = 0;
-	
+
 	/**
-	 * The ItemStacks that hold the items currently being used in the electricFurnace
+	 * The ItemStacks that hold the items currently being used in the
+	 * electricFurnace
 	 */
 	private NonNullList<ItemStack> electricFurnaceItemStacks = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
 	/** The number of ticks that the electricFurnace will keep burning */
@@ -60,11 +60,11 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 	private String electricFurnaceCustomName;
 
 	protected EnergyStorageMod storage;
-	
-	public TileEntityElectricFurnace(){
+
+	public TileEntityElectricFurnace() {
 		storage = new EnergyStorageMod(1600);
 	}
-	
+
 	/**
 	 * Returns the number of slots in the inventory.
 	 */
@@ -72,19 +72,16 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 		return this.electricFurnaceItemStacks.size();
 	}
 
-	public boolean isEmpty()
-    {
-        for (ItemStack itemstack : this.electricFurnaceItemStacks)
-        {
-            if (!itemstack.isEmpty())
-            {
-                return false;
-            }
-        }
+	public boolean isEmpty() {
+		for (ItemStack itemstack : this.electricFurnaceItemStacks) {
+			if (!itemstack.isEmpty()) {
+				return false;
+			}
+		}
 
-        return true;
-    }
-	
+		return true;
+	}
+
 	/**
 	 * Returns the stack in the given slot.
 	 */
@@ -94,8 +91,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 	}
 
 	/**
-	 * Removes up to a specified number of items from an inventory slot and
-	 * returns them in a new stack.
+	 * Removes up to a specified number of items from an inventory slot and returns
+	 * them in a new stack.
 	 */
 	@Nullable
 	public ItemStack decrStackSize(int index, int count) {
@@ -149,46 +146,43 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 	}
 
 	public static void registerFixesElectricFurnace(DataFixer fixer) {
-		fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(TileEntityElectricFurnace.class, new String[] { "Items" }));
+		fixer.registerWalker(FixTypes.BLOCK_ENTITY,
+				new ItemStackDataLists(TileEntityElectricFurnace.class, new String[] { "Items" }));
 	}
-	
-    public void readFromNBT(NBTTagCompound compound)
-    {
-        super.readFromNBT(compound);
-        this.electricFurnaceItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.electricFurnaceItemStacks);
-        this.electricFurnaceBurnTime = compound.getInteger("BurnTime");
-        this.cookTime = compound.getInteger("CookTime");
-        this.totalCookTime = compound.getInteger("CookTimeTotal");
-        this.currentItemBurnTime = getItemBurnTime(this.electricFurnaceItemStacks.get(1));
+
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		this.electricFurnaceItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+		ItemStackHelper.loadAllItems(compound, this.electricFurnaceItemStacks);
+		this.electricFurnaceBurnTime = compound.getInteger("BurnTime");
+		this.cookTime = compound.getInteger("CookTime");
+		this.totalCookTime = compound.getInteger("CookTimeTotal");
+		this.currentItemBurnTime = getItemBurnTime(this.electricFurnaceItemStacks.get(1));
 		storage.setEnergy(compound.getInteger("Energy"));
 
-        if (compound.hasKey("CustomName", 8))
-        {
-            this.electricFurnaceCustomName = compound.getString("CustomName");
-        }
-    }
+		if (compound.hasKey("CustomName", 8)) {
+			this.electricFurnaceCustomName = compound.getString("CustomName");
+		}
+	}
 
-    public NBTTagCompound writeToNBT(NBTTagCompound compound)
-    {
-        super.writeToNBT(compound);
-        compound.setInteger("BurnTime", (short)this.electricFurnaceBurnTime);
-        compound.setInteger("CookTime", (short)this.cookTime);
-        compound.setInteger("CookTimeTotal", (short)this.totalCookTime);
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		super.writeToNBT(compound);
+		compound.setInteger("BurnTime", (short) this.electricFurnaceBurnTime);
+		compound.setInteger("CookTime", (short) this.cookTime);
+		compound.setInteger("CookTimeTotal", (short) this.totalCookTime);
 		compound.setInteger("Energy", storage.getEnergyStored());
-        ItemStackHelper.saveAllItems(compound, this.electricFurnaceItemStacks);
+		ItemStackHelper.saveAllItems(compound, this.electricFurnaceItemStacks);
 
-        if (this.hasCustomName())
-        {
-            compound.setString("CustomName", this.electricFurnaceCustomName);
-        }
+		if (this.hasCustomName()) {
+			compound.setString("CustomName", this.electricFurnaceCustomName);
+		}
 
-        return compound;
-    }
+		return compound;
+	}
 
 	/**
-	 * Returns the maximum stack size for a inventory slot. Seems to always be
-	 * 64, possibly will be extended.
+	 * Returns the maximum stack size for a inventory slot. Seems to always be 64,
+	 * possibly will be extended.
 	 */
 	public int getInventoryStackLimit() {
 		return 64;
@@ -211,18 +205,18 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 	 */
 	public void update() {
 		tick++;
-		
+
 		boolean flag = this.isBurning();
 		boolean flag1 = false;
-		
+
 		if (this.isBurning()) {
 			--this.electricFurnaceBurnTime;
 		}
-		
-		if(storage.getEnergyStored() > 0 || this.electricFurnaceBurnTime > 0){
+
+		if (storage.getEnergyStored() > 0 || this.electricFurnaceBurnTime > 0) {
 			this.electricFurnaceBurnTime = storage.getEnergyStored();
 		}
-		
+
 		if (!this.world.isRemote) {
 			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 			isNeighborGen(world, pos.getX(), pos.getY(), pos.getZ());
@@ -237,13 +231,12 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 						flag1 = true;
 						world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
-						
 						if (!this.electricFurnaceItemStacks.get(1).isEmpty() && storage.getEnergyStored() == 0) {
 							this.electricFurnaceItemStacks.get(1).shrink(1);
 
 							if (this.electricFurnaceItemStacks.get(1).getCount() == 0) {
-									this.electricFurnaceItemStacks.set(1, electricFurnaceItemStacks.get(1).getItem()
-											.getContainerItem(electricFurnaceItemStacks.get(1)));
+								this.electricFurnaceItemStacks.set(1, electricFurnaceItemStacks.get(1).getItem()
+										.getContainerItem(electricFurnaceItemStacks.get(1)));
 							}
 						}
 					}
@@ -270,16 +263,16 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 				ElectricFurnaceBlock.setState(this.isBurning(), this.world, this.pos);
 			}
 		}
-		
-		if(this.isBurning()){
+
+		if (this.isBurning()) {
 			storage.extractEnergy(1, false);
 		}
 
 		if (flag1) {
 			this.markDirty();
 		}
-		
-		if(tick >= 20){
+
+		if (tick >= 20) {
 			tick = 0;
 		}
 	}
@@ -289,8 +282,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 	}
 
 	/**
-	 * Returns true if the electricFurnace can smelt an item, i.e. has a source item,
-	 * destination stack isn't full, etc.
+	 * Returns true if the electricFurnace can smelt an item, i.e. has a source
+	 * item, destination stack isn't full, etc.
 	 */
 	private boolean canSmelt() {
 		if (this.electricFurnaceItemStacks.get(0).isEmpty()) {
@@ -304,8 +297,9 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 			if (!this.electricFurnaceItemStacks.get(2).isItemEqual(itemstack))
 				return false;
 			int result = electricFurnaceItemStacks.get(2).getCount() + itemstack.getCount();
-			return result <= getInventoryStackLimit() && result <= this.electricFurnaceItemStacks.get(2).getMaxStackSize(); // Forge
-																													// properly.
+			return result <= getInventoryStackLimit()
+					&& result <= this.electricFurnaceItemStacks.get(2).getMaxStackSize(); // Forge
+			// properly.
 		}
 	}
 
@@ -321,17 +315,19 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 				this.electricFurnaceItemStacks.set(2, itemstack.copy());
 			} else if (this.electricFurnaceItemStacks.get(2).getItem() == itemstack.getItem()) {
 				this.electricFurnaceItemStacks.get(2).grow(itemstack.getCount()); // Forge
-																				// //
-																				// items
+																					// //
+																					// items
 			}
 
 			if (this.electricFurnaceItemStacks.get(0).getItem() == Item.getItemFromBlock(Blocks.SPONGE)
-					&& this.electricFurnaceItemStacks.get(0).getMetadata() == 1 && !this.electricFurnaceItemStacks.get(1).isEmpty()
+					&& this.electricFurnaceItemStacks.get(0).getMetadata() == 1
+					&& !this.electricFurnaceItemStacks.get(1).isEmpty()
 					&& this.electricFurnaceItemStacks.get(1).getItem() == Items.BUCKET) {
 				this.electricFurnaceItemStacks.set(1, new ItemStack(Items.WATER_BUCKET));
 			}
 
-			this.electricFurnaceItemStacks.get(0).shrink(1);;
+			this.electricFurnaceItemStacks.get(0).shrink(1);
+			;
 
 			if (this.electricFurnaceItemStacks.get(0).getCount() <= 0) {
 				this.electricFurnaceItemStacks.set(0, ItemStack.EMPTY);
@@ -369,8 +365,7 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 	}
 
 	/**
-	 * Don't rename this method to canInteractWith due to conflicts with
-	 * Container
+	 * Don't rename this method to canInteractWith due to conflicts with Container
 	 */
 	public boolean isUsableByPlayer(EntityPlayer player) {
 		return this.world.getTileEntity(this.pos) != this ? false
@@ -395,8 +390,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 			return true;
 		} else {
 			ItemStack itemstack = this.electricFurnaceItemStacks.get(1);
-			return isItemFuel(stack)
-					|| SlotElectricFurnaceFuel.isBucket(stack) && (itemstack.isEmpty() || itemstack.getItem() != Items.BUCKET);
+			return isItemFuel(stack) || SlotElectricFurnaceFuel.isBucket(stack)
+					&& (itemstack.isEmpty() || itemstack.getItem() != Items.BUCKET);
 		}
 	}
 
@@ -405,16 +400,16 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 	}
 
 	/**
-	 * Returns true if automation can insert the given item in the given slot
-	 * from the given side.
+	 * Returns true if automation can insert the given item in the given slot from
+	 * the given side.
 	 */
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
 		return this.isItemValidForSlot(index, itemStackIn);
 	}
 
 	/**
-	 * Returns true if automation can extract the given item in the given slot
-	 * from the given side.
+	 * Returns true if automation can extract the given item in the given slot from
+	 * the given side.
 	 */
 	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
 		if (direction == EnumFacing.DOWN && index == 1) {
@@ -521,7 +516,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 	public void isNeighborGen(World world, int x, int y, int z) {
 		if (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntityGenerator) {
 			TileEntityGenerator tileentity = (TileEntityGenerator) world.getTileEntity(new BlockPos(x + 1, y, z));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -530,7 +526,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 		}
 		if (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntityGenerator) {
 			TileEntityGenerator tileentity = (TileEntityGenerator) world.getTileEntity(new BlockPos(x - 1, y, z));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -539,7 +536,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 		}
 		if (world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityGenerator) {
 			TileEntityGenerator tileentity = (TileEntityGenerator) world.getTileEntity(new BlockPos(x, y + 1, z));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -548,7 +546,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 		}
 		if (world.getTileEntity(new BlockPos(x, y - 1, z)) instanceof TileEntityGenerator) {
 			TileEntityGenerator tileentity = (TileEntityGenerator) world.getTileEntity(new BlockPos(x, y - 1, z));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -557,7 +556,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntityGenerator) {
 			TileEntityGenerator tileentity = (TileEntityGenerator) world.getTileEntity(new BlockPos(x, y, z + 1));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -566,7 +566,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntityGenerator) {
 			TileEntityGenerator tileentity = (TileEntityGenerator) world.getTileEntity(new BlockPos(x, y, z - 1));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -574,11 +575,13 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 			}
 		}
 	}
-	
+
 	public void isNeighborSolar(World world, int x, int y, int z) {
 		if (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntitySolarGenerator) {
-			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x + 1, y, z));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world
+					.getTileEntity(new BlockPos(x + 1, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -586,8 +589,10 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 			}
 		}
 		if (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntitySolarGenerator) {
-			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x - 1, y, z));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world
+					.getTileEntity(new BlockPos(x - 1, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -595,8 +600,10 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 			}
 		}
 		if (world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntitySolarGenerator) {
-			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x, y + 1, z));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world
+					.getTileEntity(new BlockPos(x, y + 1, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -604,8 +611,10 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 			}
 		}
 		if (world.getTileEntity(new BlockPos(x, y - 1, z)) instanceof TileEntitySolarGenerator) {
-			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x, y - 1, z));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world
+					.getTileEntity(new BlockPos(x, y - 1, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -613,8 +622,10 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 			}
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntitySolarGenerator) {
-			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x, y, z + 1));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world
+					.getTileEntity(new BlockPos(x, y, z + 1));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -622,8 +633,10 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 			}
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntitySolarGenerator) {
-			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x, y, z - 1));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world
+					.getTileEntity(new BlockPos(x, y, z - 1));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -635,7 +648,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 	public void isNeighborWire(World world, int x, int y, int z) {
 		if (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntityWire) {
 			TileEntityWire tileentity = (TileEntityWire) world.getTileEntity(new BlockPos(x + 1, y, z));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -644,7 +658,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 		}
 		if (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntityWire) {
 			TileEntityWire tileentity = (TileEntityWire) world.getTileEntity(new BlockPos(x - 1, y, z));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -653,7 +668,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 		}
 		if (world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityWire) {
 			TileEntityWire tileentity = (TileEntityWire) world.getTileEntity(new BlockPos(x, y + 1, z));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -662,7 +678,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 		}
 		if (world.getTileEntity(new BlockPos(x, y - 1, z)) instanceof TileEntityWire) {
 			TileEntityWire tileentity = (TileEntityWire) world.getTileEntity(new BlockPos(x, y - 1, z));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -671,7 +688,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntityWire) {
 			TileEntityWire tileentity = (TileEntityWire) world.getTileEntity(new BlockPos(x, y, z + 1));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -680,7 +698,8 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntityWire) {
 			TileEntityWire tileentity = (TileEntityWire) world.getTileEntity(new BlockPos(x, y, z - 1));
-			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world.getTileEntity(new BlockPos(x, y, z));
+			TileEntityElectricFurnace tileentityThis = (TileEntityElectricFurnace) world
+					.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
 				tileentity.getStorage().extractEnergy(1, false);
@@ -688,22 +707,19 @@ public class TileEntityElectricFurnace extends TileEntityLockable implements ITi
 			}
 		}
 	}
-	
+
 	@Nullable
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
-    }
-	
-	public NBTTagCompound getUpdateTag()
-    {
-        return this.writeToNBT(new NBTTagCompound());
-    }
-	
-	public void handleUpdateTag(NBTTagCompound tag)
-    {
-        this.readFromNBT(tag);
-    }
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
+	}
+
+	public NBTTagCompound getUpdateTag() {
+		return this.writeToNBT(new NBTTagCompound());
+	}
+
+	public void handleUpdateTag(NBTTagCompound tag) {
+		this.readFromNBT(tag);
+	}
 
 	public EnergyStorageMod getStorage() {
 		return storage;

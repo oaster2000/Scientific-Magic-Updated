@@ -153,7 +153,7 @@ public class TileEntityGenerator extends TileEntityLockable implements ITickable
         this.generatorBurnTime = compound.getInteger("BurnTime");
         this.cookTime = compound.getInteger("CookTime");
         this.totalCookTime = compound.getInteger("CookTimeTotal");
-        this.currentItemBurnTime = getItemBurnTime(this.generatorItemStacks.get(1));
+        this.currentItemBurnTime = getItemBurnTime(this.generatorItemStacks.get(0));
 		storage.setEnergy(compound.getInteger("Energy"));
 
         if (compound.hasKey("CustomName", 8))

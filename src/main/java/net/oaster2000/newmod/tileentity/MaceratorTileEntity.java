@@ -43,9 +43,9 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 	private static final int[] SLOTS_TOP = new int[] { 0 };
 	private static final int[] SLOTS_BOTTOM = new int[] { 2, 1 };
 	private static final int[] SLOTS_SIDES = new int[] { 1 };
-	
+
 	int tick = 0;
-	
+
 	/**
 	 * The ItemStacks that hold the items currently being used in the macerator
 	 */
@@ -62,30 +62,27 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 	private String maceratorCustomName;
 
 	protected EnergyStorageMod storage;
-	
-	public MaceratorTileEntity(){
+
+	public MaceratorTileEntity() {
 		storage = new EnergyStorageMod(1600);
 	}
-	
+
 	/**
 	 * Returns the number of slots in the inventory.
 	 */
 	public int getSizeInventory() {
 		return this.maceratorItemStacks.size();
 	}
-	
-	public boolean isEmpty()
-    {
-        for (ItemStack itemstack : this.maceratorItemStacks)
-        {
-            if (!itemstack.isEmpty())
-            {
-                return false;
-            }
-        }
 
-        return true;
-    }
+	public boolean isEmpty() {
+		for (ItemStack itemstack : this.maceratorItemStacks) {
+			if (!itemstack.isEmpty()) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 
 	/**
 	 * Returns the stack in the given slot.
@@ -96,8 +93,8 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 	}
 
 	/**
-	 * Removes up to a specified number of items from an inventory slot and
-	 * returns them in a new stack.
+	 * Removes up to a specified number of items from an inventory slot and returns
+	 * them in a new stack.
 	 */
 	@Nullable
 	public ItemStack decrStackSize(int index, int count) {
@@ -151,46 +148,43 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 	}
 
 	public static void registerFixesMacerator(DataFixer fixer) {
-		fixer.registerWalker(FixTypes.BLOCK_ENTITY, new ItemStackDataLists(MaceratorTileEntity.class, new String[] { "Items" }));
+		fixer.registerWalker(FixTypes.BLOCK_ENTITY,
+				new ItemStackDataLists(MaceratorTileEntity.class, new String[] { "Items" }));
 	}
-	
-    public void readFromNBT(NBTTagCompound compound)
-    {
-        super.readFromNBT(compound);
-        this.maceratorItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, this.maceratorItemStacks);
-        this.maceratorBurnTime = compound.getInteger("BurnTime");
-        this.cookTime = compound.getInteger("CookTime");
-        this.totalCookTime = compound.getInteger("CookTimeTotal");
-        this.currentItemBurnTime = getItemBurnTime(this.maceratorItemStacks.get(1));
+
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+		this.maceratorItemStacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+		ItemStackHelper.loadAllItems(compound, this.maceratorItemStacks);
+		this.maceratorBurnTime = compound.getInteger("BurnTime");
+		this.cookTime = compound.getInteger("CookTime");
+		this.totalCookTime = compound.getInteger("CookTimeTotal");
+		this.currentItemBurnTime = getItemBurnTime(this.maceratorItemStacks.get(1));
 		storage.setEnergy(compound.getInteger("Energy"));
 
-        if (compound.hasKey("CustomName", 8))
-        {
-            this.maceratorCustomName = compound.getString("CustomName");
-        }
-    }
+		if (compound.hasKey("CustomName", 8)) {
+			this.maceratorCustomName = compound.getString("CustomName");
+		}
+	}
 
-    public NBTTagCompound writeToNBT(NBTTagCompound compound)
-    {
-        super.writeToNBT(compound);
-        compound.setInteger("BurnTime", (short)this.maceratorBurnTime);
-        compound.setInteger("CookTime", (short)this.cookTime);
-        compound.setInteger("CookTimeTotal", (short)this.totalCookTime);
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		super.writeToNBT(compound);
+		compound.setInteger("BurnTime", (short) this.maceratorBurnTime);
+		compound.setInteger("CookTime", (short) this.cookTime);
+		compound.setInteger("CookTimeTotal", (short) this.totalCookTime);
 		compound.setInteger("Energy", storage.getEnergyStored());
-        ItemStackHelper.saveAllItems(compound, this.maceratorItemStacks);
+		ItemStackHelper.saveAllItems(compound, this.maceratorItemStacks);
 
-        if (this.hasCustomName())
-        {
-            compound.setString("CustomName", this.maceratorCustomName);
-        }
+		if (this.hasCustomName()) {
+			compound.setString("CustomName", this.maceratorCustomName);
+		}
 
-        return compound;
-    }
+		return compound;
+	}
 
 	/**
-	 * Returns the maximum stack size for a inventory slot. Seems to always be
-	 * 64, possibly will be extended.
+	 * Returns the maximum stack size for a inventory slot. Seems to always be 64,
+	 * possibly will be extended.
 	 */
 	public int getInventoryStackLimit() {
 		return 64;
@@ -213,14 +207,14 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 	 */
 	public void update() {
 		tick++;
-		
+
 		boolean flag = this.isBurning();
 		boolean flag1 = false;
-		
+
 		if (this.isBurning()) {
 			--this.maceratorBurnTime;
 		}
-		
+
 		if (!this.world.isRemote) {
 			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 			isNeighborGen(world, pos.getX(), pos.getY(), pos.getZ());
@@ -235,13 +229,12 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 						flag1 = true;
 						world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
-						
 						if (!this.maceratorItemStacks.get(1).isEmpty() && storage.getEnergyStored() == 0) {
 							this.maceratorItemStacks.get(1).shrink(1);
 
 							if (this.maceratorItemStacks.get(1).getCount() == 0) {
-									this.maceratorItemStacks.set(1, maceratorItemStacks.get(1).getItem()
-											.getContainerItem(maceratorItemStacks.get(1)));
+								this.maceratorItemStacks.set(1, maceratorItemStacks.get(1).getItem()
+										.getContainerItem(maceratorItemStacks.get(1)));
 							}
 						}
 					}
@@ -268,16 +261,16 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 				MaceratorBlock.setState(this.isBurning(), this.world, this.pos);
 			}
 		}
-		
-		if(this.isBurning()){
+
+		if (this.isBurning()) {
 			storage.extractEnergy(1, false);
 		}
 
 		if (flag1) {
 			this.markDirty();
 		}
-		
-		if(tick >= 20){
+
+		if (tick >= 20) {
 			tick = 0;
 		}
 	}
@@ -303,13 +296,13 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 				return false;
 			int result = maceratorItemStacks.get(2).getCount() + itemstack.getCount();
 			return result <= getInventoryStackLimit() && result <= this.maceratorItemStacks.get(2).getMaxStackSize(); // Forge
-																													// properly.
+																														// properly.
 		}
 	}
 
 	/**
-	 * Turn one item from the macerator source stack into the appropriate
-	 * smelted item in the macerator result stack
+	 * Turn one item from the macerator source stack into the appropriate smelted
+	 * item in the macerator result stack
 	 */
 	public void smeltItem() {
 		if (this.canSmelt()) {
@@ -319,8 +312,8 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 				this.maceratorItemStacks.set(2, itemstack.copy());
 			} else if (this.maceratorItemStacks.get(2).getItem() == itemstack.getItem()) {
 				this.maceratorItemStacks.get(2).grow(itemstack.getCount()); // Forge
-																				// //
-																				// items
+																			// //
+																			// items
 			}
 
 			if (this.maceratorItemStacks.get(0).getItem() == Item.getItemFromBlock(Blocks.SPONGE)
@@ -367,8 +360,7 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 	}
 
 	/**
-	 * Don't rename this method to canInteractWith due to conflicts with
-	 * Container
+	 * Don't rename this method to canInteractWith due to conflicts with Container
 	 */
 	public boolean isUsableByPlayer(EntityPlayer player) {
 		return this.world.getTileEntity(this.pos) != this ? false
@@ -393,8 +385,8 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 			return true;
 		} else {
 			ItemStack itemstack = this.maceratorItemStacks.get(1);
-			return isItemFuel(stack)
-					|| SlotMaceratorFuel.isBucket(stack) && (itemstack.isEmpty() || itemstack.getItem() != Items.BUCKET);
+			return isItemFuel(stack) || SlotMaceratorFuel.isBucket(stack)
+					&& (itemstack.isEmpty() || itemstack.getItem() != Items.BUCKET);
 		}
 	}
 
@@ -403,16 +395,16 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 	}
 
 	/**
-	 * Returns true if automation can insert the given item in the given slot
-	 * from the given side.
+	 * Returns true if automation can insert the given item in the given slot from
+	 * the given side.
 	 */
 	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
 		return this.isItemValidForSlot(index, itemStackIn);
 	}
 
 	/**
-	 * Returns true if automation can extract the given item in the given slot
-	 * from the given side.
+	 * Returns true if automation can extract the given item in the given slot from
+	 * the given side.
 	 */
 	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
 		if (direction == EnumFacing.DOWN && index == 1) {
@@ -571,10 +563,11 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 			}
 		}
 	}
-	
+
 	public void isNeighborSolar(World world, int x, int y, int z) {
 		if (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntitySolarGenerator) {
-			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x + 1, y, z));
+			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world
+					.getTileEntity(new BlockPos(x + 1, y, z));
 			MaceratorTileEntity tileentityThis = (MaceratorTileEntity) world.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
@@ -583,7 +576,8 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 			}
 		}
 		if (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntitySolarGenerator) {
-			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x - 1, y, z));
+			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world
+					.getTileEntity(new BlockPos(x - 1, y, z));
 			MaceratorTileEntity tileentityThis = (MaceratorTileEntity) world.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
@@ -592,7 +586,8 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 			}
 		}
 		if (world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntitySolarGenerator) {
-			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x, y + 1, z));
+			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world
+					.getTileEntity(new BlockPos(x, y + 1, z));
 			MaceratorTileEntity tileentityThis = (MaceratorTileEntity) world.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
@@ -601,7 +596,8 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 			}
 		}
 		if (world.getTileEntity(new BlockPos(x, y - 1, z)) instanceof TileEntitySolarGenerator) {
-			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x, y - 1, z));
+			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world
+					.getTileEntity(new BlockPos(x, y - 1, z));
 			MaceratorTileEntity tileentityThis = (MaceratorTileEntity) world.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
@@ -610,7 +606,8 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 			}
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntitySolarGenerator) {
-			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x, y, z + 1));
+			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world
+					.getTileEntity(new BlockPos(x, y, z + 1));
 			MaceratorTileEntity tileentityThis = (MaceratorTileEntity) world.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
@@ -619,7 +616,8 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 			}
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntitySolarGenerator) {
-			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x, y, z - 1));
+			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world
+					.getTileEntity(new BlockPos(x, y, z - 1));
 			MaceratorTileEntity tileentityThis = (MaceratorTileEntity) world.getTileEntity(new BlockPos(x, y, z));
 			if (tileentity.getStorage().getEnergyStored() > 0 && tileentityThis.getStorage()
 					.getEnergyStored() < tileentityThis.getStorage().getMaxEnergyStored()) {
@@ -685,22 +683,19 @@ public class MaceratorTileEntity extends TileEntityLockable implements ITickable
 			}
 		}
 	}
-	
+
 	@Nullable
-    public SPacketUpdateTileEntity getUpdatePacket()
-    {
-        return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
-    }
-	
-	public NBTTagCompound getUpdateTag()
-    {
-        return this.writeToNBT(new NBTTagCompound());
-    }
-	
-	public void handleUpdateTag(NBTTagCompound tag)
-    {
-        this.readFromNBT(tag);
-    }
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
+	}
+
+	public NBTTagCompound getUpdateTag() {
+		return this.writeToNBT(new NBTTagCompound());
+	}
+
+	public void handleUpdateTag(NBTTagCompound tag) {
+		this.readFromNBT(tag);
+	}
 
 	public EnergyStorageMod getStorage() {
 		return storage;

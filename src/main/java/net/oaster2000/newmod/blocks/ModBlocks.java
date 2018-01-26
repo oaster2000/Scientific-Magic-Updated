@@ -37,24 +37,24 @@ public final class ModBlocks {
 	public static Block deCon_on;
 
 	public static void createBlocks() {
-		firstBlock = (new StrongBlock("firstBlock"));
-		dStone_ore = (new StoneOreBlock("dStone_ore"));
-		dStone_ore_nether = (new NetherOreBlock("dStone_ore_nether"));
-		aCrucible = (new CrucibleBlock("aCrucible"));
+		firstBlock = (new StrongBlock("firstblock"));
+		dStone_ore = (new StoneOreBlock("dstone_ore"));
+		dStone_ore_nether = (new NetherOreBlock("dstone_ore_nether"));
+		aCrucible = (new CrucibleBlock("acrucible"));
 		macerator = (new MaceratorBlock(false, "macerator")).setCreativeTab(Main.creativeTab);
 		macerator_ON = (new MaceratorBlock(true, "macerator_on"));
 		gen = (new GeneratorBlock(false, "gen")).setCreativeTab(Main.creativeTab);
 		gen_on = (new GeneratorBlock(true, "gen_on"));
 		wire = (new WireBlock("wire"));
-		sunGen = (new SolarGeneratorBlock(false, "sunGen")).setCreativeTab(Main.creativeTab);
-		sunGen_on = (new SolarGeneratorBlock(true, "sunGen_on"));
-		furnace = (new ElectricFurnaceBlock(false, "furnaceEl")).setCreativeTab(Main.creativeTab);
-		furnace_on = (new ElectricFurnaceBlock(true, "furnaceEl_on"));
-		copperOre = (new StoneOreBlock("copperOre"));
-		tinOre = (new StoneOreBlock("tinOre"));
-		silverOre = (new StoneOreBlock("silverOre"));
-		deCon = (new DeconstructorBlock(false, "deCon")).setCreativeTab(Main.creativeTab);
-		deCon_on = (new DeconstructorBlock(true, "deCon_on"));
+		sunGen = (new SolarGeneratorBlock(false, "sungen")).setCreativeTab(Main.creativeTab);
+		sunGen_on = (new SolarGeneratorBlock(true, "sungen_on"));
+		furnace = (new ElectricFurnaceBlock(false, "furnaceel")).setCreativeTab(Main.creativeTab);
+		furnace_on = (new ElectricFurnaceBlock(true, "furnaceel_on"));
+		copperOre = (new StoneOreBlock("copperore"));
+		tinOre = (new StoneOreBlock("tinore"));
+		silverOre = (new StoneOreBlock("silverore"));
+		deCon = (new DeconstructorBlock(false, "decon")).setCreativeTab(Main.creativeTab);
+		deCon_on = (new DeconstructorBlock(true, "decon_on"));
 	}
 
 	@Mod.EventBusSubscriber(modid = Main.MODID)
