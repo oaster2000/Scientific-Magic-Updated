@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "newmod:gen" },
+        "facing=south": { "model": "newmod:gen", "y": 180 },
+        "facing=west":  { "model": "newmod:gen", "y": 270 },
+        "facing=east":  { "model": "newmod:gen", "y": 90 }
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "newmod:deCon_on" },
+        "facing=south": { "model": "newmod:deCon_on", "y": 180 },
+        "facing=west":  { "model": "newmod:deCon_on", "y": 270 },
+        "facing=east":  { "model": "newmod:deCon_on", "y": 90 }
+    }
+}

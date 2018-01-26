@@ -1,0 +1,6 @@
+{
+    "parent":"newmod:block/wire",
+    "textures": {
+        "all": "newmod:blocks/wire"
+    }
+}

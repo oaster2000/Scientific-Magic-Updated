@@ -1,0 +1,8 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "newmod:blocks/solarPanel",
+        "front": "blocks/iron_block",
+        "side": "blocks/iron_block"
+    }
+}

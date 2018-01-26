@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "newmod:furnaceEl_on" },
+        "facing=south": { "model": "newmod:furnaceEl_on", "y": 180 },
+        "facing=west":  { "model": "newmod:furnaceEl_on", "y": 270 },
+        "facing=east":  { "model": "newmod:furnaceEl_on", "y": 90 }
+    }
+}

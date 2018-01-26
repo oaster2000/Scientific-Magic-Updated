@@ -1,0 +1,6 @@
+{
+    "parent":"newmod:block/silverOre",
+    "textures": {
+        "all": "newmod:blocks/silverOre"
+    }
+}

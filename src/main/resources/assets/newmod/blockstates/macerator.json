@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "newmod:macerator" },
+        "facing=south": { "model": "newmod:macerator", "y": 180 },
+        "facing=west":  { "model": "newmod:macerator", "y": 270 },
+        "facing=east":  { "model": "newmod:macerator", "y": 90 }
+    }
+}

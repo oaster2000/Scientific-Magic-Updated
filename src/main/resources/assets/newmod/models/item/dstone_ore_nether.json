@@ -1,0 +1,6 @@
+{
+    "parent":"newmod:block/dStone_ore_nether",
+    "textures": {
+        "all": "newmod:blocks/dStone_ore_nether"
+    }
+}

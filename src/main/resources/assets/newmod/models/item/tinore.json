@@ -1,0 +1,6 @@
+{
+    "parent":"newmod:block/tinOre",
+    "textures": {
+        "all": "newmod:blocks/tinOre"
+    }
+}

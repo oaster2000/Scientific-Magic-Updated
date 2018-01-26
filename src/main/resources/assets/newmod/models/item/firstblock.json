@@ -1,0 +1,6 @@
+{
+    "parent":"newmod:block/firstBlock",
+    "textures": {
+        "all": "newmod:blocks/firstBlock"
+    }
+}
