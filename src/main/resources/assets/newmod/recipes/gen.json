@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"DRD",
+		"RAR",
+		"DRD"
+	],
+	"key": {
+		"D": {
+			"item": "minecraft:iron_block"
+		},
+		"R": {
+			"item": "minecraft:redstone"
+		},
+		"A": {
+			"item": "newmod:battery"
+		}
+	},
+	"result": {
+		"item": "newmod:gen"
+	}
+}

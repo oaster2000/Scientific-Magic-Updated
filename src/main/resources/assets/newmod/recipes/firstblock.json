@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"SSS",
+		"SDS",
+		"SSS"
+	],
+	"key": {
+		"D": {
+			"item": "newmod:pcrystal"
+		},
+		"S": {
+			"item": "newmod:dgem"
+		}
+	},
+	"result": {
+		"item": "newmod:firstblock"
+	}
+}

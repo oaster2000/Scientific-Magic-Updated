@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" T ",
+		"TRT",
+		"TCT"
+	],
+	"key": {
+		"T": {
+			"item": "newmod:tinplate"
+		},
+		"R": {
+			"item": "minecraft:redstone"
+		},
+		"C": {
+			"item": "newmod:wire"
+		}
+	},
+	"result": {
+		"item": "newmod:battery"
+	}
+}

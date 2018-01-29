@@ -1,5 +1,12 @@
 {
     "variants": {
-        "normal": { "model": "newmod:wire" }
+        "connection=none": { "model": "newmod:cable_dot" },
+        "connection=u": { "model": "newmod:cable_dot" },
+        "connection=d": { "model": "newmod:cable" },
+        "connection=n": { "model": "newmod:cable" },
+        "connection=s": { "model": "newmod:cable_dot" },
+        "connection=e": { "model": "newmod:cable" },
+        "connection=w": { "model": "newmod:cable" },
+        "connection=all": { "model": "newmod:cable_dot" }
     }
 }

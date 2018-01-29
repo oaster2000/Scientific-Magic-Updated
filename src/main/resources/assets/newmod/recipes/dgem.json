@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"SSS",
+		"SDS",
+		"SSS"
+	],
+	"key": {
+		"D": {
+			"item": "minecraft:diamond"
+		},
+		"S": {
+			"item": "newmod:dstone"
+		}
+	},
+	"result": {
+		"item": "newmod:dgem"
+	}
+}

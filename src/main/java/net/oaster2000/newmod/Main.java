@@ -48,8 +48,6 @@ public class Main {
 	@EventHandler
 	public void Init(FMLInitializationEvent e){
 		proxy.Init(e);
-		CraftingHandler.addShapedRecipies();
-		CraftingHandler.addShapelessRecipies();
 		CraftingHandler.addSmeltingRecipies();
 		GameRegistry.registerWorldGenerator(new NewModWorldGen(), 0);
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
