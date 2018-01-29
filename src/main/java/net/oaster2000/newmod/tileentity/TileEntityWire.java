@@ -9,13 +9,13 @@ import net.oaster2000.newmod.energy.EnergyStorageMod;
 
 public class TileEntityWire extends TileEntity implements ITickable {
 	
-	EnergyStorageMod storage = new EnergyStorageMod(100);
+	EnergyStorageMod storage = new EnergyStorageMod(320);
 
 	public EnergyStorageMod getStorage() {
 		return storage;
 	}
 
-	public void isNeighborGen(World world, int x, int y, int z) {
+	public boolean isNeighborGen(World world, int x, int y, int z) {
 		if (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntityGenerator) {
 			TileEntityGenerator tileentity = (TileEntityGenerator) world.getTileEntity(new BlockPos(x + 1, y, z));
 			TileEntityWire tileentityWire = (TileEntityWire) world.getTileEntity(new BlockPos(x, y, z));
@@ -23,6 +23,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntityGenerator) {
 			TileEntityGenerator tileentity = (TileEntityGenerator) world.getTileEntity(new BlockPos(x - 1, y, z));
@@ -31,6 +32,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityGenerator) {
 			TileEntityGenerator tileentity = (TileEntityGenerator) world.getTileEntity(new BlockPos(x, y + 1, z));
@@ -39,6 +41,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x, y - 1, z)) instanceof TileEntityGenerator) {
 			TileEntityGenerator tileentity = (TileEntityGenerator) world.getTileEntity(new BlockPos(x, y - 1, z));
@@ -47,6 +50,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntityGenerator) {
 			TileEntityGenerator tileentity = (TileEntityGenerator) world.getTileEntity(new BlockPos(x, y, z + 1));
@@ -55,6 +59,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntityGenerator) {
 			TileEntityGenerator tileentity = (TileEntityGenerator) world.getTileEntity(new BlockPos(x, y, z - 1));
@@ -63,10 +68,12 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
+		return false;
 	}
 	
-	public void isNeighborSolar(World world, int x, int y, int z) {
+	public boolean isNeighborSolar(World world, int x, int y, int z) {
 		if (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntitySolarGenerator) {
 			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x + 1, y, z));
 			TileEntityWire tileentityWire = (TileEntityWire) world.getTileEntity(new BlockPos(x, y, z));
@@ -74,6 +81,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntitySolarGenerator) {
 			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x - 1, y, z));
@@ -82,6 +90,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntitySolarGenerator) {
 			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x, y + 1, z));
@@ -90,6 +99,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x, y - 1, z)) instanceof TileEntitySolarGenerator) {
 			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x, y - 1, z));
@@ -98,6 +108,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntitySolarGenerator) {
 			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x, y, z + 1));
@@ -106,6 +117,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntitySolarGenerator) {
 			TileEntitySolarGenerator tileentity = (TileEntitySolarGenerator) world.getTileEntity(new BlockPos(x, y, z - 1));
@@ -114,10 +126,12 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
+		return false;
 	}
 
-	public void isNeighborWire(World world, int x, int y, int z) {
+	public boolean isNeighborWire(World world, int x, int y, int z) {
 		if (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntityWire) {
 			TileEntityWire tileentity = (TileEntityWire) world.getTileEntity(new BlockPos(x + 1, y, z));
 			TileEntityWire tileentityWire = (TileEntityWire) world.getTileEntity(new BlockPos(x, y, z));
@@ -125,6 +139,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntityWire) {
 			TileEntityWire tileentity = (TileEntityWire) world.getTileEntity(new BlockPos(x - 1, y, z));
@@ -133,6 +148,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityWire) {
 			TileEntityWire tileentity = (TileEntityWire) world.getTileEntity(new BlockPos(x, y + 1, z));
@@ -141,6 +157,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x, y - 1, z)) instanceof TileEntityWire) {
 			TileEntityWire tileentity = (TileEntityWire) world.getTileEntity(new BlockPos(x, y - 1, z));
@@ -149,6 +166,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntityWire) {
 			TileEntityWire tileentity = (TileEntityWire) world.getTileEntity(new BlockPos(x, y, z + 1));
@@ -157,6 +175,7 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
 		if (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntityWire) {
 			TileEntityWire tileentity = (TileEntityWire) world.getTileEntity(new BlockPos(x, y, z - 1));
@@ -165,9 +184,33 @@ public class TileEntityWire extends TileEntity implements ITickable {
 				tileentity.getStorage().extractEnergy(1, false);
 				tileentityWire.getStorage().receiveEnergy(1, false);
 			}
+			return true;
 		}
+		return false;
 	}
 
+	public String isNeighborMachine(World world, int x, int y, int z) {
+		if (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntityMachine) {
+			return "north";
+		}
+		if (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntityMachine) {
+			return "south";
+		}
+		if (world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityMachine) {
+			return "up";
+		}
+		if (world.getTileEntity(new BlockPos(x, y - 1, z)) instanceof TileEntityMachine) {
+			return "down";
+		}
+		if (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntityMachine) {
+			return "east";
+		}
+		if (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntityMachine) {
+			return "west";
+		}
+		return "none";
+	}
+	
 	public void readFromNBT(NBTTagCompound compound)
     {
         super.readFromNBT(compound);

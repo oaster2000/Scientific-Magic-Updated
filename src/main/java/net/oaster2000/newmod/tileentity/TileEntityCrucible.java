@@ -33,7 +33,7 @@ import net.oaster2000.newmod.crafting.CrucibleRecipies;
 import net.oaster2000.newmod.items.ModItems;
 import net.oaster2000.newmod.slot.SlotCrucibleFuel;
 
-public class TileEntityCrucible extends TileEntityLockable implements ITickable, ISidedInventory
+public class TileEntityCrucible extends TileEntityMachine implements ITickable, ISidedInventory
 {
     private static final int[] SLOTS_TOP = new int[] {0};
     private static final int[] SLOTS_BOTTOM = new int[] {2, 1};

@@ -36,7 +36,7 @@ import net.oaster2000.newmod.container.ContainerElectricFurnace;
 import net.oaster2000.newmod.energy.EnergyStorageMod;
 import net.oaster2000.newmod.slot.SlotElectricFurnaceFuel;
 
-public class TileEntityElectricFurnace extends TileEntityLockable implements ITickable, ISidedInventory {
+public class TileEntityElectricFurnace extends TileEntityMachine implements ITickable, ISidedInventory {
 	private static final int[] SLOTS_TOP = new int[] { 0 };
 	private static final int[] SLOTS_BOTTOM = new int[] { 2, 1 };
 	private static final int[] SLOTS_SIDES = new int[] { 1 };

@@ -1,12 +1,16 @@
 {
+	"forge_marker": 1,
+	"defaults": {},
     "variants": {
-        "connection=none": { "model": "newmod:cable_dot" },
-        "connection=u": { "model": "newmod:cable_dot" },
-        "connection=d": { "model": "newmod:cable" },
-        "connection=n": { "model": "newmod:cable" },
-        "connection=s": { "model": "newmod:cable_dot" },
-        "connection=e": { "model": "newmod:cable" },
-        "connection=w": { "model": "newmod:cable" },
-        "connection=all": { "model": "newmod:cable_dot" }
+		"connection": {
+			"none": { "model": "newmod:cable" },
+			"u": { "model": "newmod:cable" },
+			"d": { "model": "newmod:cable" },
+			"n": { "model": "newmod:cable_dot" },
+			"s": { "model": "newmod:cable" },
+			"e": { "model": "newmod:cable" },
+			"w": { "model": "newmod:cable" },
+			"all": { "model": "newmod:cable" }
+		}
     }
 }
