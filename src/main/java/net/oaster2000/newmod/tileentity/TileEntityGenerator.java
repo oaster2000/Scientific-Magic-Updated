@@ -35,7 +35,7 @@ import net.oaster2000.newmod.energy.EnergyStorageMod;
 import net.oaster2000.newmod.items.ModItems;
 import net.oaster2000.newmod.slot.SlotGeneratorFuel;
 
-public class TileEntityGenerator extends TileEntityLockable implements ITickable, ISidedInventory
+public class TileEntityGenerator extends TileEntityEnergyDevice implements ITickable, ISidedInventory
 {	
     private static final int[] SLOTS_BOTTOM = new int[] {1};
     /** The ItemStacks that hold the items currently being used in the generator */

@@ -7,7 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.oaster2000.newmod.energy.EnergyStorageMod;
 
-public class TileEntityWire extends TileEntity implements ITickable {
+public class TileEntityWire extends TileEntityEnergyDevice implements ITickable {
 	
 	EnergyStorageMod storage = new EnergyStorageMod(320);
 
@@ -189,24 +189,27 @@ public class TileEntityWire extends TileEntity implements ITickable {
 		return false;
 	}
 
-	public String isNeighborMachine(World world, int x, int y, int z) {
-		if (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntityMachine) {
-			return "north";
+	public String isNeighborDevice(World world, int x, int y, int z) {
+		if ((world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x, y - 1, z)) instanceof TileEntityEnergyDevice)) {
+			return "updown";
 		}
-		if (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntityMachine) {
-			return "south";
+		if (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntityEnergyDevice) {
+			return "west";
 		}
-		if (world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityMachine) {
-			return "up";
-		}
-		if (world.getTileEntity(new BlockPos(x, y - 1, z)) instanceof TileEntityMachine) {
-			return "down";
-		}
-		if (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntityMachine) {
+		if (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntityEnergyDevice) {
 			return "east";
 		}
+		if (world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) {
+			return "up";
+		}
+		if (world.getTileEntity(new BlockPos(x, y - 1, z)) instanceof TileEntityEnergyDevice) {
+			return "down";
+		}
+		if (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntityEnergyDevice) {
+			return "south";
+		}
 		if (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntityMachine) {
-			return "west";
+			return "north";
 		}
 		return "none";
 	}

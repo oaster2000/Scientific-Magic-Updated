@@ -60,17 +60,30 @@ public class WireBlock extends BlockContainer {
 		TileEntity te = worldIn.getTileEntity(pos);
 		if (te instanceof TileEntityWire) {
 			TileEntityWire wireEntity = (TileEntityWire) te;
-			String isMachine = wireEntity.isNeighborMachine(Minecraft.getMinecraft().world, pos.getX(), pos.getY(), pos.getZ());
-			if (!isMachine.equals("none")) {
-				switch (isMachine) {
+			String isDevice = wireEntity.isNeighborDevice(Minecraft.getMinecraft().world, pos.getX(), pos.getY(), pos.getZ());
+			if (!isDevice.equals("none")) {
+				switch (isDevice) {
 				case "north":
 					 connection = EnumConnection.N;
+					 break;
 				case "south":
 					 connection = EnumConnection.S;
+					 break;
 				case "east":
 					 connection = EnumConnection.E;
+					 break;
 				case "west":
 					 connection = EnumConnection.W;
+					 break;
+				case "up":
+					 connection = EnumConnection.U;
+					 break;
+				case "down":
+					 connection = EnumConnection.D;
+					 break;
+				case "updown":
+					connection = EnumConnection.UD;
+					break;
 				}
 			}
 		}
@@ -91,7 +104,7 @@ public class WireBlock extends BlockContainer {
     }
 
 	public static enum EnumConnection implements IStringSerializable {
-		NONE, U, D, N, S, E, W, ALL;
+		NONE, U, D, N, S, E, W, UD, ALL;
 
 		private EnumConnection() {
 		}

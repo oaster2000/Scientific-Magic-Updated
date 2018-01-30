@@ -35,7 +35,7 @@ import net.oaster2000.newmod.energy.EnergyStorageMod;
 import net.oaster2000.newmod.items.ModItems;
 import net.oaster2000.newmod.slot.SlotGeneratorFuel;
 
-public class TileEntitySolarGenerator extends TileEntityLockable implements ITickable
+public class TileEntitySolarGenerator extends TileEntityEnergyDevice implements ITickable
 {
     /** The number of ticks that the generator will keep burning */
     private int generatorBurnTime;

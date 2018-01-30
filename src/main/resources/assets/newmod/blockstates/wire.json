@@ -3,13 +3,14 @@
 	"defaults": {},
     "variants": {
 		"connection": {
-			"none": { "model": "newmod:cable" },
-			"u": { "model": "newmod:cable" },
-			"d": { "model": "newmod:cable" },
-			"n": { "model": "newmod:cable_dot" },
-			"s": { "model": "newmod:cable" },
-			"e": { "model": "newmod:cable" },
-			"w": { "model": "newmod:cable" },
+			"none": { "model": "newmod:cable_dot" },
+			"ud": { "model": "newmod:cable" },
+			"u": { "model": "newmod:cable_u" },
+			"d": { "model": "newmod:cable_d" },
+			"n": { "model": "newmod:cable_n" },
+			"s": { "model": "newmod:cable_s" },
+			"e": { "model": "newmod:cable_e" },
+			"w": { "model": "newmod:cable_w" },
 			"all": { "model": "newmod:cable" }
 		}
     }
