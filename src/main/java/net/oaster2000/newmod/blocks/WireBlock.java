@@ -85,6 +85,7 @@ public class WireBlock extends BlockContainer {
 					connection = EnumConnection.UD;
 					break;
 				}
+				//PROOF I OWEN/OASTER2000 OWN THE GITHUB
 			}
 		}
 		
