@@ -193,6 +193,18 @@ public class TileEntityWire extends TileEntityEnergyDevice implements ITickable 
 		if ((world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x, y - 1, z)) instanceof TileEntityEnergyDevice)) {
 			return "updown";
 		}
+		if ((world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntityEnergyDevice)) {
+			return "upnorth";
+		}
+		if ((world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntityEnergyDevice)) {
+			return "upsouth";
+		}
+		if ((world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntityEnergyDevice)) {
+			return "upeast";
+		}
+		if ((world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntityEnergyDevice)) {
+			return "upwest";
+		}
 		if (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntityEnergyDevice) {
 			return "west";
 		}
@@ -208,7 +220,7 @@ public class TileEntityWire extends TileEntityEnergyDevice implements ITickable 
 		if (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntityEnergyDevice) {
 			return "south";
 		}
-		if (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntityMachine) {
+		if (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntityEnergyDevice) {
 			return "north";
 		}
 		return "none";

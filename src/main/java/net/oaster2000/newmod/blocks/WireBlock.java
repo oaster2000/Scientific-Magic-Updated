@@ -84,8 +84,19 @@ public class WireBlock extends BlockContainer {
 				case "updown":
 					connection = EnumConnection.UD;
 					break;
+				case "upnorth":
+					connection = EnumConnection.UN;
+					break;
+				case "upsouth":
+					connection = EnumConnection.US;
+					break;
+				case "upeast":
+					connection = EnumConnection.UE;
+					break;
+				case "upwest":
+					connection = EnumConnection.UW;
+					break;
 				}
-				//PROOF I OWEN/OASTER2000 OWN THE GITHUB
 			}
 		}
 		
@@ -105,7 +116,7 @@ public class WireBlock extends BlockContainer {
     }
 
 	public static enum EnumConnection implements IStringSerializable {
-		NONE, U, D, N, S, E, W, UD, ALL;
+		NONE, U, D, N, S, E, W, UD, UN, US, UE, UW, ALL;
 
 		private EnumConnection() {
 		}

@@ -5,6 +5,8 @@
 		"connection": {
 			"none": { "model": "newmod:cable_dot" },
 			"ud": { "model": "newmod:cable" },
+			"un": { "model": "newmod:cable_un" },
+			"us": { "model": "newmod:cable_us" },
 			"u": { "model": "newmod:cable_u" },
 			"d": { "model": "newmod:cable_d" },
 			"n": { "model": "newmod:cable_n" },

@@ -232,12 +232,6 @@
 	],
 	"groups": [
 		{
-			"name": "",
-			"isOpen": true,
-			"display": {"visibility": true, "autouv": true},
-			"children": []
-		},
-		{
 			"name": "cable_u",
 			"isOpen": true,
 			"display": {"visibility": true, "autouv": true},
