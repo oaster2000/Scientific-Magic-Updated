@@ -28,6 +28,9 @@ public final class BlockRenderRegister {
 		reg(ModBlocks.copperOre);
 		reg(ModBlocks.tinOre);
 		reg(ModBlocks.silverOre);
+		reg(ModBlocks.deCon);
+		reg(ModBlocks.deCon_on);
+		reg(ModBlocks.obscural);
 	}
 
 	public static void reg(Block block) {

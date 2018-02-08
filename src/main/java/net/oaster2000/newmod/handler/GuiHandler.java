@@ -11,6 +11,8 @@ import net.oaster2000.newmod.container.ContainerElectricFurnace;
 import net.oaster2000.newmod.container.ContainerGenerator;
 import net.oaster2000.newmod.container.ContainerMacerator;
 import net.oaster2000.newmod.container.ContainerSolarGenerator;
+import net.oaster2000.newmod.gui.GUIObscural;
+import net.oaster2000.newmod.gui.GUITome;
 import net.oaster2000.newmod.gui.GuiCrucible;
 import net.oaster2000.newmod.gui.GuiDeconstructor;
 import net.oaster2000.newmod.gui.GuiElectricFurnace;
@@ -58,14 +60,20 @@ public class GuiHandler implements IGuiHandler {
 				}
 			}
 		}
+		
 		return null;
 
 	}
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		if(ID == 6) {
+			return new GUITome();
+		}
+		if(ID == 7) {
+			return new GUIObscural();
+		}
 		TileEntity entity = world.getTileEntity(new BlockPos(x, y, z));
-
 		if (entity != null) {
 			switch (ID) {
 			case 0:

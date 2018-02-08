@@ -27,19 +27,19 @@ public class ContainerGenerator extends Container
     public ContainerGenerator(InventoryPlayer playerInventory, TileEntityGenerator furnaceInv)
     {
         this.tileFurnace = furnaceInv;
-        this.addSlotToContainer(new SlotGeneratorFuel(furnaceInv, 0, 80, 29));
+        this.addSlotToContainer(new SlotGeneratorFuel(furnaceInv, 0, 80, 62));
         
         for (int i = 0; i < 3; ++i)
         {
             for (int j = 0; j < 9; ++j)
             {
-                this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 66 + i * 18));
+                this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 83 + i * 18));
             }
         }
 
         for (int k = 0; k < 9; ++k)
         {
-            this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 124));
+            this.addSlotToContainer(new Slot(playerInventory, k, 8 + k * 18, 141));
         }	
     }
 

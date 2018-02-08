@@ -34,6 +34,9 @@ public class NewModWorldGen implements IWorldGenerator{
 		switch (world.provider.getDimension()) {
 		case 0: // Overworld
 			this.runGenerator(gen_dStone_ore, world, random, chunkX, chunkZ, 15, 0, 64);
+			this.runGenerator(gen_copperOre, world, random, chunkX, chunkZ, 35, 0, 64);
+			this.runGenerator(gen_tinOre, world, random, chunkX, chunkZ, 35, 0, 64);
+			this.runGenerator(gen_silverOre, world, random, chunkX, chunkZ, 35, 0, 64);
 			break;
 		case -1: //Nether
 			this.runGenerator(gen_dStone_ore_nether, world, random, chunkX, chunkZ, 15, 0, 64);

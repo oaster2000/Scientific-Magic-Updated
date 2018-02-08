@@ -27,6 +27,12 @@ public class GuiSolarGenerator extends GuiContainer
         this.tileFurnace = furnaceInv;
     }
 
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+		this.renderHoveredToolTip(mouseX, mouseY);
+	}
+    
     /**
      * Draw the foreground layer for the GuiContainer (everything in front of the items)
      */

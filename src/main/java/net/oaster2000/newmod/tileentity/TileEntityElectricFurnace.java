@@ -192,7 +192,7 @@ public class TileEntityElectricFurnace extends TileEntityMachine implements ITic
 	 * ElectricFurnace isBurning
 	 */
 	public boolean isBurning() {
-		return storage.getEnergyStored() > 0 && !electricFurnaceItemStacks.get(0).isEmpty();
+		return this.electricFurnaceBurnTime > 0;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -213,10 +213,6 @@ public class TileEntityElectricFurnace extends TileEntityMachine implements ITic
 			--this.electricFurnaceBurnTime;
 		}
 
-		if (storage.getEnergyStored() > 0 || this.electricFurnaceBurnTime > 0) {
-			this.electricFurnaceBurnTime = storage.getEnergyStored();
-		}
-
 		if (!this.world.isRemote) {
 			world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 			isNeighborGen(world, pos.getX(), pos.getY(), pos.getZ());
@@ -224,14 +220,14 @@ public class TileEntityElectricFurnace extends TileEntityMachine implements ITic
 			isNeighborWire(world, pos.getX(), pos.getY(), pos.getZ());
 			if (this.isBurning() || !this.electricFurnaceItemStacks.get(0).isEmpty()) {
 				if (!this.isBurning() && this.canSmelt()) {
-					this.electricFurnaceBurnTime = getItemBurnTime(this.electricFurnaceItemStacks.get(1));
+					this.electricFurnaceBurnTime = storage.getEnergyStored();
 					this.currentItemBurnTime = this.electricFurnaceBurnTime;
 
 					if (this.isBurning()) {
 						flag1 = true;
 						world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
-						if (!this.electricFurnaceItemStacks.get(1).isEmpty() && storage.getEnergyStored() == 0) {
+						if (!this.electricFurnaceItemStacks.get(1).isEmpty() && storage.getEnergyStored() > 0) {
 							this.electricFurnaceItemStacks.get(1).shrink(1);
 
 							if (this.electricFurnaceItemStacks.get(1).getCount() == 0) {
@@ -488,8 +484,7 @@ public class TileEntityElectricFurnace extends TileEntityMachine implements ITic
 			net.minecraft.util.EnumFacing.DOWN);
 	net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this,
 			net.minecraft.util.EnumFacing.WEST);
-
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability,
 			net.minecraft.util.EnumFacing facing) {

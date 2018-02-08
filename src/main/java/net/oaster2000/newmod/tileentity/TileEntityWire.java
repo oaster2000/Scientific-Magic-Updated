@@ -190,6 +190,24 @@ public class TileEntityWire extends TileEntityEnergyDevice implements ITickable 
 	}
 
 	public String isNeighborDevice(World world, int x, int y, int z) {
+		if ((world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntityEnergyDevice)) {
+			return "upnorthsouth";
+		}
+		if ((world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntityEnergyDevice)) {
+			return "upeastwest";
+		}
+		if ((world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntityEnergyDevice)) {
+			return "upnortheast";
+		}
+		if ((world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x, y, z - 1)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntityEnergyDevice)) {
+			return "upnorthwest";
+		}
+		if ((world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x - 1, y, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntityEnergyDevice)) {
+			return "upsoutheast";
+		}
+		if ((world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x, y, z + 1)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x + 1, y, z)) instanceof TileEntityEnergyDevice)) {
+			return "upsouthwest";
+		}
 		if ((world.getTileEntity(new BlockPos(x, y + 1, z)) instanceof TileEntityEnergyDevice) && (world.getTileEntity(new BlockPos(x, y - 1, z)) instanceof TileEntityEnergyDevice)) {
 			return "updown";
 		}

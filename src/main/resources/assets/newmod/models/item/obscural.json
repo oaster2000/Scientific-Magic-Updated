@@ -1,0 +1,11 @@
+{
+    "parent": "newmod:block/obscural",
+	"textures": {
+		"0": "blocks/stone_slab_top",
+		"1": "blocks/stone_slab_side",
+		"2": "blocks/end_rod",
+		"3": "blocks/stone",
+		"4": "blocks/beacon",
+		"particle": "blocks/stone_slab_top"
+	}
+}

@@ -38,6 +38,7 @@ public class ItemRenderRegister {
 		reg(ModItems.silverPlate);
 		reg(ModItems.ironPlate);
 		reg(ModItems.goldPlate);
+		reg(ModItems.magicalTome);
 	}
 	
 	public static void reg(Item item){

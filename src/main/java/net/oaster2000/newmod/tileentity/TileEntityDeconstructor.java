@@ -198,7 +198,7 @@ public class TileEntityDeconstructor extends TileEntityMachine implements ITicka
 	 * Deconstructor isBurning
 	 */
 	public boolean isBurning() {
-		return this.canSmelt();
+		return this.deconstructorBurnTime > 0;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -226,7 +226,7 @@ public class TileEntityDeconstructor extends TileEntityMachine implements ITicka
 			isNeighborWire(world, pos.getX(), pos.getY(), pos.getZ());
 			if (this.isBurning() || !this.deconstructorItemStacks.get(0).isEmpty()) {
 				if (!this.isBurning() && this.canSmelt()) {
-					this.deconstructorBurnTime = getItemBurnTime(this.deconstructorItemStacks.get(1));
+					this.deconstructorBurnTime = storage.getEnergyStored();
 					this.currentItemBurnTime = this.deconstructorBurnTime;
 
 					if (this.isBurning()) {
@@ -234,7 +234,7 @@ public class TileEntityDeconstructor extends TileEntityMachine implements ITicka
 						world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
 						
-						if (!this.deconstructorItemStacks.get(1).isEmpty() && storage.getEnergyStored() == 0) {
+						if (!this.deconstructorItemStacks.get(1).isEmpty() && storage.getEnergyStored() > 0) {
 							this.deconstructorItemStacks.get(1).shrink(1);;
 
 							if (this.deconstructorItemStacks.get(1).getCount() == 0) {
@@ -488,7 +488,6 @@ public class TileEntityDeconstructor extends TileEntityMachine implements ITicka
 	net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this,
 			net.minecraft.util.EnumFacing.WEST);
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability,
 			net.minecraft.util.EnumFacing facing) {

@@ -124,19 +124,15 @@ public class MaceratorBlock extends BlockContainer{
 	            {
 	                case WEST:
 	                    worldIn.spawnParticle(EnumParticleTypes.END_ROD , d0 - 0.52D, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
-	                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 - 0.52D, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
 	                    break;
 	                case EAST:
 	                    worldIn.spawnParticle(EnumParticleTypes.END_ROD, d0 + 0.52D, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
-	                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + 0.52D, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
 	                    break;
 	                case NORTH:
 	                    worldIn.spawnParticle(EnumParticleTypes.END_ROD, d0 + d4, d1, d2 - 0.52D, 0.0D, 0.0D, 0.0D, new int[0]);
-	                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 - 0.52D, 0.0D, 0.0D, 0.0D, new int[0]);
 	                    break;
 	                case SOUTH:
 	                    worldIn.spawnParticle(EnumParticleTypes.END_ROD, d0 + d4, d1, d2 + 0.52D, 0.0D, 0.0D, 0.0D, new int[0]);
-	                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 + 0.52D, 0.0D, 0.0D, 0.0D, new int[0]);
 	            }
 	        }
 	    }

@@ -35,6 +35,7 @@ public final class ModBlocks {
 	public static Block silverOre;
 	public static Block deCon;
 	public static Block deCon_on;
+	public static Block obscural;
 
 	public static void createBlocks() {
 		firstBlock = (new StrongBlock("firstblock"));
@@ -55,6 +56,7 @@ public final class ModBlocks {
 		silverOre = (new StoneOreBlock("silverore"));
 		deCon = (new DeconstructorBlock(false, "decon")).setCreativeTab(Main.creativeTab);
 		deCon_on = (new DeconstructorBlock(true, "decon_on"));
+		obscural = (new ObscuralBlock("obscural"));
 	}
 
 	@Mod.EventBusSubscriber(modid = Main.MODID)
@@ -73,7 +75,7 @@ public final class ModBlocks {
 
 			final Block[] blocks = { firstBlock, dStone_ore, dStone_ore_nether, aCrucible, macerator, macerator_ON,
 					furnace, furnace_on, gen, gen_on, wire, sunGen, sunGen_on, copperOre, tinOre, silverOre, deCon,
-					deCon_on };
+					deCon_on, obscural };
 
 			registry.registerAll(blocks);
 		}
@@ -91,7 +93,7 @@ public final class ModBlocks {
 					new ItemBlock(macerator_ON), new ItemBlock(furnace), new ItemBlock(furnace_on), new ItemBlock(gen),
 					new ItemBlock(gen_on), new ItemBlock(wire), new ItemBlock(sunGen), new ItemBlock(sunGen_on),
 					new ItemBlock(copperOre), new ItemBlock(tinOre), new ItemBlock(silverOre), new ItemBlock(deCon),
-					new ItemBlock(deCon_on) };
+					new ItemBlock(deCon_on),  new ItemBlock(obscural)};
 
 			final IForgeRegistry<Item> registry = event.getRegistry();
 

@@ -194,7 +194,7 @@ public class MaceratorTileEntity extends TileEntityMachine implements ITickable,
 	 * Macerator isBurning
 	 */
 	public boolean isBurning() {
-		return this.canSmelt();
+		return this.maceratorBurnTime > 0;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -222,14 +222,14 @@ public class MaceratorTileEntity extends TileEntityMachine implements ITickable,
 			isNeighborWire(world, pos.getX(), pos.getY(), pos.getZ());
 			if (this.isBurning() || !this.maceratorItemStacks.get(0).isEmpty()) {
 				if (!this.isBurning() && this.canSmelt()) {
-					this.maceratorBurnTime = getItemBurnTime(this.maceratorItemStacks.get(1));
+					this.maceratorBurnTime = storage.getEnergyStored();
 					this.currentItemBurnTime = this.maceratorBurnTime;
 
 					if (this.isBurning()) {
 						flag1 = true;
 						world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 3);
 
-						if (!this.maceratorItemStacks.get(1).isEmpty() && storage.getEnergyStored() == 0) {
+						if (!this.maceratorItemStacks.get(1).isEmpty() && storage.getEnergyStored() > 0) {
 							this.maceratorItemStacks.get(1).shrink(1);
 
 							if (this.maceratorItemStacks.get(1).getCount() == 0) {
