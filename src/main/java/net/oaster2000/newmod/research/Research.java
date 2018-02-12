@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 
@@ -113,6 +114,24 @@ public class Research {
 
 		public String getName() {
 			return name().toLowerCase();
+		}
+	}
+
+	public void writeToNBT(NBTTagCompound compound) {
+		boolean completed = this.state.equals(EnumResearchState.FOUND);
+		compound.setBoolean("complete", completed);
+	}
+
+	public void readFromNBT(NBTTagCompound compound) {
+		boolean complete = compound.getBoolean("complete");
+		if(complete) {
+			this.setState(EnumResearchState.FOUND);
+		}else {
+			if(this.parent.getState().equals(EnumResearchState.FOUND)) {
+				this.setState(EnumResearchState.UNDISCOVERED);
+			}else {
+				this.setState(EnumResearchState.HIDDEN);				
+			}
 		}
 	}
 }

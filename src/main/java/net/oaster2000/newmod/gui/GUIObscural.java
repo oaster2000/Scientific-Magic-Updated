@@ -120,7 +120,7 @@ public class GUIObscural extends GuiScreen {
 
 			if(!child.getState().equals(EnumResearchState.HIDDEN)) {
 			drawLine(parentX, parentY, childX, childY);
-			}
+			}	
 		}
 	}
 

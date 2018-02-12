@@ -11,6 +11,7 @@ import net.oaster2000.newmod.capability.Mana;
 import net.oaster2000.newmod.capability.ManaEventHandler;
 import net.oaster2000.newmod.capability.ManaStorage;
 import net.oaster2000.newmod.handler.ItemCraftingHandler;
+import net.oaster2000.newmod.handler.ResearchUpdateHandler;
 
 public class CommonProxy {
 
@@ -23,6 +24,7 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
 		MinecraftForge.EVENT_BUS.register(new ManaEventHandler());
 		MinecraftForge.EVENT_BUS.register(new ItemCraftingHandler());
+		MinecraftForge.EVENT_BUS.register(new ResearchUpdateHandler());
 	
 	}
 	
