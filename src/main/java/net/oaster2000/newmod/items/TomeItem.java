@@ -18,13 +18,13 @@ public class TomeItem extends BasicItem{
 		this.setMaxStackSize(1);
 	}
 	
-	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-    {
-		if(worldIn.isRemote) {
-			player.openGui(Main.instance, 6, worldIn, (int) player.posX, (int) player.posY, (int) player.posZ);
-			return EnumActionResult.SUCCESS;
-		}
-		return EnumActionResult.PASS;
-    }
+	 public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn)
+	    {
+		 if(worldIn.isRemote) {
+			 player.openGui(Main.instance, 6, worldIn, (int) player.posX, (int) player.posY, (int) player.posZ);
+			 return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(handIn));
+		 }
+	        return new ActionResult<ItemStack>(EnumActionResult.PASS, player.getHeldItem(handIn));
+	    }
 
 }

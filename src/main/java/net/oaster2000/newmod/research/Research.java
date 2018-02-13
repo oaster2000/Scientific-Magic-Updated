@@ -22,15 +22,18 @@ public class Research {
     private final Research parent;
     private final List<Research> children = new ArrayList<Research>();
     private ItemStack icon;
+    private String name;
+    
+    private boolean showToast;
     
     public int x;
     public int y;
 	
 	public Research(int id, @Nullable Research parent, String type, Item icon) {
-		this(id, parent, type, icon, 0, 0, EnumResearchState.UNDISCOVERED);
+		this(id, parent, type, icon, 0, 0, EnumResearchState.UNDISCOVERED, "");
 	}
 	
-	public Research(int id, @Nullable Research parent, String type, Item icon, int x, int y, EnumResearchState state) {
+	public Research(int id, @Nullable Research parent, String type, Item icon, int x, int y, EnumResearchState state, String name) {
 		this.id = id;
 		this.type = type;
 		this.parent = parent;
@@ -39,11 +42,37 @@ public class Research {
 		this.icon = new ItemStack(icon, 1);
 		this.x = x;
 		this.y = y;
+		this.name = name;
+		initShowToast(state);
 	}
 	
-    public Research getParent()
+    private void initShowToast(EnumResearchState currState) {
+    	switch(currState) {
+    	case FOUND:
+    		this.showToast = false;
+    	case HIDDEN:
+    		this.showToast = false;
+    	case UNDISCOVERED:
+    		this.showToast = true;
+    	}
+	}
+
+	public Research getParent()
     {
         return this.parent;
+    }
+	
+	public boolean shouldShowToast() {
+		return this.showToast;
+	}
+	
+	public void setShowToast(boolean toast) {
+		this.showToast = toast;
+	}
+    
+    public String getName()
+    {
+        return this.name;
     }
     
     public ItemStack getIcon() {
